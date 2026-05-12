@@ -14,27 +14,27 @@ impl MessageHandler<UserCreatedEventMessage> for UserCreatedHandler {
     fn handle(&self, message: Box<UserCreatedEventMessage>
     ) -> Result<(), HandleError> {
         let ten_millis = time::Duration::from_millis(1000);
-        let now = time::Instant::now();
+        let _now = time::Instant::now();
 
-        // thread::sleep(ten_millis);
+        thread::sleep(ten_millis);
 
-        println!("In Nizar's(2306152046) Computer [129500004y]. Message received: {:?}",
-        message);
-
+        println!("In 2306245075 Computer. Message received: {:?}", message);
         Ok(())
     }
 
     fn get_handler_action(&self) -> String {
-        "".to_string()
+        "user_created".to_owned()
     }
 }
 
 fn main() {
-    let listener = CrosstownBus::new_queue_listener("amqp://guest:guest@localhost:5672".to_owned()).unwrap();
-
-    _ = listener.listen("user_created".to_owned(), UserCreatedHandler{}, crosstown_bus::QueueProperties { auto_delete: false, durable: false, use_dead_letter: true });
-
+    let listener =
+        CrosstownBus::new_queue_listener("amqp://guest:guest@localhost:5672".to_owned()
+        ).unwrap();
+    _ = listener.listen("user_created".to_owned(), UserCreatedHandler{},
+        crosstown_bus::QueueProperties { auto_delete: false, durable: false,
+        use_dead_letter: true });
     loop {
-        
+
     }
 }
